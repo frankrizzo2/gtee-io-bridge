@@ -95,16 +95,25 @@ Switching the cabinet off and on while the PC is running is fine. The controls d
 
 ### Default keys
 
-| Cabinet button | Key | GTee Clubhouse action |
+| Cabinet button | Sends | GTee Clubhouse action |
 |---|---|---|
 | Start/Replay | Enter | Start |
-| Left / Right | ← / → | Left / Right |
+| Left / Right | Left / right **mouse click** | (rebind Left/Right in Clubhouse if you use them there) |
 | Fly-by | ↑ | FlyBy |
 | Spin | ↓ | Spin |
 | Help | W | Help |
 | Options | Q | Options |
 | Service/Test | F2 | Test (bind once in Clubhouse) |
 | Help + Options held 4 s | Escape (one tap) | Exit to Clubhouse |
+| Hold Fly-by + press Left / Right | Windows **Volume Down / Up** (repeats while held) | — |
+
+The volume combo uses the standard media-key volume buttons, so it works in Windows itself with no software. Once you use the combo, Fly-by's own key is released until you let go of it.
+
+### Changing the mapping (GUI)
+
+Double-click **`gtee-mapper.bat`** on the PC the Pico is plugged into (close any serial terminal first). Pick the Pico's COM port, click **Connect**, choose what each button sends (any key, left/right/middle mouse click, or a media key), set the volume combo and trackball options, then **Save to Pico**. The dot next to each button lights while you press it, so you can check which is which. The mapping is stored in the Pico's flash and survives power-off; the controls drop out for a moment while it saves. **Factory defaults** restores the table above.
+
+The same thing can be done from a serial terminal with `!get`, `!set …`, `!save` (type `h` for the list).
 
 ### GTee Clubhouse setup
 
@@ -129,8 +138,9 @@ The Pico also shows up as a COM port (115200 baud):
 ## Customising
 
 Everything board-specific is in [`gtee-bridge/config.h`](gtee-bridge/config.h):
-- `BUTTONS` table: which report bit sends which key
-- `MOUSE_SCALE`, `MOUSE_INVERT_X`, `MOUSE_INVERT_Y`
+- `BUTTON_INPUTS` / `DEFAULT_ACTIONS`: which report bit is which button, and its factory-default action (the GUI changes the live mapping without a rebuild)
+- `VOLUME_COMBO_*`: default volume combo buttons and repeat timing
+- `MOUSE_SCALE`, `MOUSE_INVERT_X`, `MOUSE_INVERT_Y` (defaults; also adjustable in the GUI)
 - `EXIT_COMBO_MS`, `EXIT_COMBO_KEY`
 - `CTRL_VID` / `CTRL_PID` / `CTRL_EP_IN`: which device and endpoint to read
 
